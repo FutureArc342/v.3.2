@@ -213,7 +213,7 @@ nav ul li a[href="#"]:active {
 /* Hero Section */
 
 .hero {                 /* bakgrunden kan ändras med bara banner.png , vi får bestämma */
-    background: url(../images/banner.png) no-repeat center center/cover; /* Mörk bakgrund för kontrast */
+    background: url(../Images/banner.png) no-repeat center center/cover; /* Mörk bakgrund för kontrast */
     color: #ffffff; /* Vit text för läsbarhet */
     text-align: center; /* Centrerar all text */
     padding: 50px 20px; /* Justerar padding för bättre layout */
