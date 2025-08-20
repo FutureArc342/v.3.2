@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vår Tech Stack | Sömlös Marquee</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+<style>
+  :root {
+    --background-color: #121212;
+    --surface-color: #1a1a1a;
+    --text-primary-color: #eaeaea;
+    --text-secondary-color: #a0a0a0;
+    --border-color: #282828;
+    --accent-color: #f86700;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-primary-color);
+    font-family: "Poppins", sans-serif;
+    min-height: 100vh;
+  }
+
+  .tech-stack-wrapper {
+    background: linear-gradient(90deg, #11100f, #000000);
+    width: 100%;
+  }
+
+  .tech-stack-section {
+    width: 100%;
+    padding: 80px 0; /* Ändrad till 0 på sidorna */
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .tech-stack-section h2, .tech-stack-section p {
+    padding: 0 24px; /* Lägg padding här istället */
+  }
+
+  .tech-stack-section h2 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--accent-color);
+  }
+
+  .tech-stack-section p {
+    color: var(--text-secondary-color);
+    max-width: 600px;
+    margin: 0 auto 60px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .marquee-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: center;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 5%,
+      black 95%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 5%,
+      black 95%,
+      transparent 100%
+    );
+  }
+
+  .tech-marquee {
+    overflow: hidden;
+    background-color: var(--surface-color);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    width: 100%;
+    padding: 24px 0;
+  }
+
+  .tech-track {
+    display: flex;
+    /* Dynamisk bredd baserat på antal ikoner för att förhindra hopp */
+    width: calc(250px * 18); /* 9 ikoner * 2 * 250px per ikon-utrymme */
+    animation: scroll 40s linear infinite;
+  }
+
+  .tech-track.reverse {
+    animation-name: scroll-reverse;
+  }
+
+  .tech-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-250px * 9)); /* Halva totala bredden */
+    }
+  }
+
+  @keyframes scroll-reverse {
+    0% {
+      transform: translateX(calc(-250px * 9));
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  .tech-logo-wrapper {
+    /* Vi använder nu flex-grow istället för width */
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+.tech-icon {
+  height: 48px;
+  width: 48px;
+  opacity: 0.7;
+  flex-shrink: 0;
+  margin: 0 5px;
+  /* ADD THIS: Makes all changes smooth over 0.3 seconds */
+  transition: all 0.3s ease-in-out;
+}
+
+.tech-icon:hover {
+  opacity: 1;
+  /* REFINED EFFECT: Scale up slightly and move up */
+  transform: scale(1.25) translateY(-5px);
+  /* OPTIONAL: Adds a subtle glow effect */
+  filter: drop-shadow(0 0 8px rgba(255, 107, 0, 0.7));
+}
+
+  @media (max-width: 768px) {
+    .tech-icon {
+      height: 40px;
+      width: 40px;
+      margin: 0 5px;
+    }
+    .tech-track {
+        /* Justera för mindre skärmar */
+        width: calc(200px * 18);
+        animation: scroll 35s linear infinite;
+    }
+    @keyframes scroll {
+        100% { transform: translateX(calc(-200px * 9)); }
+    }
+    @keyframes scroll-reverse {
+        0% { transform: translateX(calc(-200px * 9)); }
+    }
+  }
+</style>
+  </head>
+  <body>
+    <div class="tech-stack-wrapper">
+      <section class="tech-stack-section">
+        <h2>Vår Verktygslåda</h2>
+        <p>
+          Vi använder modern och beprövad teknologi för att bygga snabba,
+          skalbara och robusta digitala lösningar.
+        </p>
+
+        <div class="marquee-container">
+          <div class="tech-marquee">
+            <div class="tech-track">
+              <div class="tech-logo-wrapper">
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                  class="tech-icon"
+                  alt="HTML5"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+                  class="tech-icon"
+                  alt="CSS3"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                  class="tech-icon"
+                  alt="JavaScript"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+                  class="tech-icon"
+                  alt="TypeScript"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                  class="tech-icon"
+                  alt="React"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg"
+                  class="tech-icon"
+                  alt="Vue.js"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg"
+                  class="tech-icon"
+                  alt="Angular"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg"
+                  class="tech-icon"
+                  alt="Svelte"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg"
+                  class="tech-icon"
+                  alt="Canva"
+                />
+              </div>
+              <div class="tech-logo-wrapper" aria-hidden="true">
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                  class="tech-icon"
+                  alt="HTML5"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+                  class="tech-icon"
+                  alt="CSS3"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                  class="tech-icon"
+                  alt="JavaScript"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+                  class="tech-icon"
+                  alt="TypeScript"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                  class="tech-icon"
+                  alt="React"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg"
+                  class="tech-icon"
+                  alt="Vue.js"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg"
+                  class="tech-icon"
+                  alt="Angular"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg"
+                  class="tech-icon"
+                  alt="Svelte"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg"
+                  class="tech-icon"
+                  alt="Canva"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="tech-marquee">
+            <div class="tech-track reverse">
+              <div class="tech-logo-wrapper">
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original-wordmark.svg"
+                  class="tech-icon"
+                  alt="Next.js"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                  class="tech-icon"
+                  alt="Node.js"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg"
+                  class="tech-icon"
+                  alt="Flutter"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg"
+                  class="tech-icon"
+                  alt="Swift"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg"
+                  class="tech-icon"
+                  alt="Figma"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-original.svg"
+                  class="tech-icon"
+                  alt="WordPress"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+                  class="tech-icon"
+                  alt="Docker"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg"
+                  class="tech-icon"
+                  alt="Canva"
+                />
+              </div>
+              <div class="tech-logo-wrapper" aria-hidden="true">
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original-wordmark.svg"
+                  class="tech-icon"
+                  alt="Next.js"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                  class="tech-icon"
+                  alt="Node.js"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg"
+                  class="tech-icon"
+                  alt="Flutter"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg"
+                  class="tech-icon"
+                  alt="Swift"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg"
+                  class="tech-icon"
+                  alt="Figma"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-original.svg"
+                  class="tech-icon"
+                  alt="WordPress"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+                  class="tech-icon"
+                  alt="Docker"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg"
+                  class="tech-icon"
+                  alt="Canva"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

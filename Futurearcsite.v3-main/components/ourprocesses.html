@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vår Process | Avancerad Interaktion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background-color: #121212;
+      --surface-color: #1E1E1E;
+      --primary-accent-color: #FF6B00;
+      --primary-accent-hover: #FF8533;
+      --spotlight-color: rgba(255, 107, 0, 0.1);
+      --text-primary-color: #EAEAEA;
+      --text-secondary-color: #A0A0A0;
+      --border-color: rgba(255, 107, 0, 0.2);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 100px 100px;
+      }
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-primary-color);
+    }
+
+    .process-section {
+      position: relative;
+      overflow: hidden;
+      padding: 100px 24px;
+      text-align: center;
+      animation: fadeIn 1s ease-out forwards;
+      background: linear-gradient(90deg, #11100f, #000000);
+    }
+
+
+    .process-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(to right, rgba(255, 107, 0, 0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 107, 0, 0.07) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 0;
+    }
+
+    .process-section::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(to right, rgba(255, 107, 0, 0.18) 2px, transparent 2px),
+        linear-gradient(to bottom, rgba(255, 107, 0, 0.18) 2px, transparent 2px);
+      background-size: 80px 80px;
+      opacity: 0.6;
+      animation: moveGrid 15s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes moveGrid {
+      0% {
+        background-position: 0 0, 0 0;
+      }
+      100% {
+        background-position: 80px 80px, 80px 80px;
+      }
+    }
+
+    /* Make sure content is above the overlays */
+    .process-section > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow-text {
+        color: var(--primary-accent-color);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .process-section h2 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 24px;
+    }
+
+    .process-section .subtitle {
+      color: var(--text-secondary-color);
+      max-width: 650px;
+      margin: 0 auto 80px;
+      font-size: 18px;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+      perspective: 1000px; /* Important for 3D tilt effect */
+    }
+
+    .process-box {
+      background-color: var(--surface-color);
+      padding: 40px;
+      border-radius: 16px;
+      border: 1px solid #2a2a2a;
+      text-align: left;
+      position: relative; /* Needed for pseudo-elements and child positioning */
+      overflow: hidden; /* Keeps the spotlight effect contained */
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+    
+    /* This pseudo-element creates the interactive spotlight */
+    .process-box::before {
+        content: '';
+        position: absolute;
+        top: var(--y, 0);
+        left: var(--x, 0);
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, var(--spotlight-color) 0%, transparent 50%);
+        transform: translate(-50%, -50%) scale(0); /* Start scaled down */
+        opacity: 0;
+        transition: transform 0.4s ease, opacity 0.4s ease;
+        z-index: 1;
+    }
+    
+    .process-box:hover::before {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(2.5); /* Grow the spotlight on hover */
+    }
+    
+    /* Content wrapper for parallax effect */
+    .process-box-content {
+        position: relative;
+        z-index: 2; /* Ensures content is above the spotlight */
+        transition: transform 0.4s ease;
+    }
+
+    .process-box:hover {
+      border-color: var(--border-color);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+      /* 3D tilt is now handled by JavaScript */
+    }
+
+    .process-box:hover .process-box-content {
+      transform: translateY(-2px); /* Slight lift for content */
+    }
+
+    .process-icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 24px;
+      color: var(--primary-accent-color);
+      transition: color 0.3s ease, transform 0.4s ease;
+    }
+    
+    .process-box:hover .process-icon {
+        color: var(--primary-accent-hover);
+        transform: translateY(-4px) scale(1.05); /* Slight parallax on icon */
+    }
+
+    .process-box h3 {
+      font-size: 22px;
+      margin-bottom: 12px;
+      color: var(--text-primary-color);
+      font-weight: 600;
+    }
+
+    .process-box p {
+      color: var(--text-secondary-color);
+      font-size: 16px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .cta-button {
+      margin-top: 80px;
+      padding: 16px 32px;
+      border: 1px solid var(--primary-accent-color);
+      color: var(--primary-accent-color);
+      background: transparent;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+      letter-spacing: 0.5px;
+    }
+
+    .cta-button:hover {
+      background-color: var(--primary-accent-color);
+      color: var(--background-color);
+      transform: scale(1.05);
+    }
+    .cta-button:active {
+        transform: scale(0.98);
+    }
+  </style>
+</head>
+<body>
+
+  <section class="process-section">
+    <p class="eyebrow-text">Vår vision</p>
+    <h2>Vad vi planerar att bygga</h2>
+    <p class="subtitle">Future Arc bygger en plattform för framtidens utvecklare med fokus på utbildning, nätverkande, entreprenörskap och mångfald.</p>
+
+    <div class="process-grid">
+      <div class="process-box">
+        <div class="process-box-content">
+          <svg class="process-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 14l9-5-9-5-9 5 9 5z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 14l6.16-3.422A12.083 12.083 0 0112 21.5a12.083 12.083 0 01-6.16-10.922L12 14z" />
+          </svg>
+          <h3>Kurser & Utbildning</h3>
+          <p>Vi planerar att erbjuda kurser och utbildningar inom kod, data och säkerhet  för att stärka framtidens utvecklare.</p>
+        </div>
+      </div>
+
+      <div class="process-box">
+        <div class="process-box-content">
+          <svg class="process-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M17 20h5V4H2v16h5m10 0v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+          </svg>
+          <h3>Virtuella Technätverk</h3>
+          <p>Vi siktar på att bygga immersiva plattformar för globala nätverk där utvecklare och innovatörer möts i realtid.</p>
+        </div>
+      </div>
+
+      <div class="process-box">
+        <div class="process-box-content">
+          <svg class="process-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 7h18M3 12h18M3 17h18" />
+          </svg>
+          <h3>Startup Labbar</h3>
+          <p>Vi planerar att skapa digitala startup labbar med AI-assistans och tillgång till verktyg och nätverk.</p>
+        </div>
+      </div>
+
+      <div class="process-box">
+        <div class="process-box-content">
+          <svg class="process-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 6v6l4 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <h3>Inkluderande Ekosystem</h3>
+          <p>Vi har som mål att bygga ett inkluderande ekosystem med riktade program för underrepresenterade grupper i tech.</p>
+        </div>
+      </div>
+
+      <div class="process-box">
+        <div class="process-box-content">
+          <svg class="process-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M17 20h5V4H2v16h5m10 0v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+          </svg>
+          <h3>Community hubbar</h3>
+          <p>Vi vill bygga både digitala och fysiska miljöer där utvecklare kan samarbeta och växa tillsammans.</p>
+        </div>
+      </div>
+
+      <div class="process-box">
+        <div class="process-box-content">
+          <svg class="process-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8c1.104 0 2-.896 2-2s-.896-2-2-2-2 .896-2 2 .896 2 2 2zM4 22v-2c0-2.21 3.582-4 8-4s8 1.79 8 4v2H4z" />
+          </svg>
+          <h3>Karriärstöd & Matchning</h3>
+          <p>Vi planerar att hjälpa utvecklare att hitta praktik, mentorskap och jobb genom personligt anpassade matchningar.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <script>
+    document.querySelectorAll('.process-box').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left; // Mouse x position relative to the card
+            const y = e.clientY - rect.top;  // Mouse y position relative to the card
+            
+            // Set CSS custom properties for the spotlight
+            card.style.setProperty('--x', `${x}px`);
+            card.style.setProperty('--y', `${y}px`);
+            
+            // Calculate tilt values
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 20; // Controls vertical tilt
+            const rotateY = (centerX - x) / 20; // Controls horizontal tilt
+            
+            // Apply 3D tilt transform
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            // Reset transform when mouse leaves the card
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nyheter</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/tabletop@1.6.4/tabletop.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet" />
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #121212;
-      color: #fff;
-    }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #121212;
+    color: #fff;
+  }
 
     .nav-link {
       font-family: 'Iceland', serif;
@@ -62,79 +65,18 @@
       background-color: #e05e00;
     }
 
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      cursor: pointer;
-      z-index: 60;
-    }
-
-    .hamburger span {
-      height: 4px;
-      width: 100%;
-      background: #fff;
-      margin: 4px 0;
-      border-radius: 2px;
-      transition: 0.3s;
-      display: block;
-    }
-
-    @media (max-width: 1023px) {
-      /* FIX: Använder ID (#navMenu) för att göra regeln mer specifik */
-      ul#navMenu {
-        display: none;
-        flex-direction: column !important;
-        background: #1e1e1e;
-        position: absolute;
-        top: 70px;
-        right: 0;
-        width: 200px;
-        box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.2);
-        border-radius: 0 0 0 12px;
-        padding: 16px 0;
-        z-index: 50; /* Säkerställer att menyn hamnar överst */
-      }
-
       /* FIX: Använder ID även här för att matcha */
       ul#navMenu.open {
         display: flex;
       }
-
-      .hamburger {
-        display: flex;
-      }
-    }
   </style>
 </head>
 
 <body>
-  <header style="background: linear-gradient(90deg, #1a1a1a 0%, #f86700 100%);">
-    <div class="container flex items-center justify-between py-8 px-6">
-      <div class="flex items-center gap-4">
-        <a href="index.html">
-          <img src="assets/images/logowhite.png" alt="FutureArc Logo" style="height:40px;width:auto;" />
-        </a>
-        <span style="background:#f86700;color:#fff;font-size:1.1rem;font-weight:600;padding:4px 14px;border-radius:8px;">
-          NYHETER
-        </span>
-      </div>
-      <nav>
-        <div class="hamburger" id="hamburgerBtn">
-          <span></span><span></span><span></span>
-        </div>
-        <ul id="navMenu" class="flex gap-6">
-          <li><a href="index.html" class="nav-link">Hem <span class="underline-animate"></span></a></li>
-          <li><a href="news.html" class="nav-link">Nyheter <span class="underline-animate"></span></a></li>
-          <li><a href="about.html" class="nav-link">Om oss <span class="underline-animate"></span></a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <div include-html="components/header.html"></div>
+  <div class="section-divider-hero"></div>
 
-  <main class="container mx-auto p-6">
+  <main class="w-full mx-auto p-6">
     <div class="bg-[#1e1e1e] p-6 rounded-lg shadow-lg">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
         <h2 class="text-3xl font-bold text-[#f86700] mb-4 sm:mb-0">Senaste Nytt</h2>
@@ -147,7 +89,8 @@
       </div>
 
       <div id="news-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 text-white auto-rows-fr">
-        </div>
+      </div>
+      <div id="pagination" class="flex justify-center mt-6 space-x-2"></div>
 
       <div class="mt-12 pt-8 border-t border-gray-700">
         <h3 class="text-xl font-bold mb-2">Nyhetsbrev</h3>
@@ -159,56 +102,94 @@
       </div>
     </div>
   </main>
+  <div class="section-divider-hero"></div>
+<footer>
+    <div include-html="components/footer.html"></div>
+</footer>
 
-  <footer class="bg-[#1a1a1a] text-white text-center p-6 mt-8">
-    <p>&copy; <span id="currentYear"></span> Din Nyhetssida. Alla rättigheter förbehållna.</p>
-  </footer>
 
   <script>
-  document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+  let allArticles = [];
+  let currentCategory = 'all';
+  let currentPage = 1;
+  const articlesPerPage = 9;
+
+  function renderArticles() {
+    const container = document.getElementById('news-container');
+    container.innerHTML = '';
+    // Filtrera på kategori
+    let filtered = currentCategory === 'all'
+      ? allArticles
+      : allArticles.filter(a => a.category.toLowerCase() === currentCategory);
+
+    // Sortera nyaste först (om du vill)
+    filtered = filtered.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+    // Paginering
+    const start = (currentPage - 1) * articlesPerPage;
+    const end = start + articlesPerPage;
+    const pageArticles = filtered.slice(start, end);
+
+    pageArticles.forEach(article => {
+      const html = `
+        <div class="news-card h-full" data-category="${article.category.toLowerCase()}">
+          <div class="p-4 border border-gray-700 rounded-lg hover:shadow-lg bg-[#1e1e1e] transition cursor-pointer h-full flex flex-col justify-between min-h-[220px]"
+               onclick="openArticle(this)"
+               data-title="${article.title}"
+               data-category="${article.category}"
+               data-timestamp="${article.timestamp}"
+               data-image="${article.image}"
+               data-excerpt="${article.excerpt}">
+            <div class="flex items-start space-x-4">
+              <img src="${article.image}" class="w-24 h-20 object-cover rounded-md" alt="${article.title}">
+              <div>
+                <span class="text-xs font-semibold uppercase text-[#f86700]">${article.category}</span>
+                <h3 class="text-lg font-bold mt-1 mb-1">${article.title}</h3>
+                <p class="text-sm text-gray-400 mb-2">${article.excerpt}</p>
+                <span class="text-xs text-gray-500">${article.timestamp}</span>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      container.innerHTML += html;
+    });
+
+    renderPagination(filtered.length);
+  }
+
+  function renderPagination(totalArticles) {
+    const pagination = document.getElementById('pagination');
+    pagination.innerHTML = '';
+    const totalPages = Math.ceil(totalArticles / articlesPerPage);
+
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i;
+      btn.className = `px-3 py-1 rounded ${i === currentPage ? 'bg-[#f86700] text-white' : 'bg-[#232323] text-gray-300 hover:bg-[#f86700] hover:text-white'}`;
+      btn.addEventListener('click', () => {
+        currentPage = i;
+        renderArticles();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      pagination.appendChild(btn);
+    }
+  }
 
   function initNews() {
     fetch('nyheter.json')
       .then(response => response.json())
       .then(data => {
-        const container = document.getElementById('news-container');
-        container.innerHTML = '';
-        data.forEach(article => {
-          const html = `
-            <div class="news-card h-full" data-category="${article.category.toLowerCase()}">
-              <div class="p-4 border border-gray-700 rounded-lg hover:shadow-lg bg-[#1e1e1e] transition cursor-pointer h-full flex flex-col justify-between min-h-[220px]"
-                   onclick="openArticle(this)"
-                   data-title="${article.title}"
-                   data-category="${article.category}"
-                   data-timestamp="${article.timestamp}"
-                   data-image="${article.image}"
-                   data-excerpt="${article.excerpt}">
-                <div class="flex items-start space-x-4">
-                  <img src="${article.image}" class="w-24 h-20 object-cover rounded-md" alt="${article.title}">
-                  <div>
-                    <span class="text-xs font-semibold uppercase text-[#f86700]">${article.category}</span>
-                    <h3 class="text-lg font-bold mt-1 mb-1">${article.title}</h3>
-                    <p class="text-sm text-gray-400 mb-2">${article.excerpt}</p>
-                    <span class="text-xs text-gray-500">${article.timestamp}</span>
-                  </div>
-                </div>
-              </div>
-            </div>`;
-          container.innerHTML += html;
-        });
-        applyCategoryFilter('all');
+        allArticles = data;
+        currentPage = 1;
+        renderArticles();
       });
   }
 
   function applyCategoryFilter(category) {
-    const articles = document.querySelectorAll('.news-card');
-    articles.forEach(a => {
-      if (category === 'all' || a.dataset.category === category) {
-        a.style.display = 'block';
-      } else {
-        a.style.display = 'none';
-      }
-    });
+    currentCategory = category;
+    currentPage = 1;
+    renderArticles();
   }
 
   const tabs = document.querySelectorAll('.category-tab');
@@ -221,6 +202,8 @@
     });
   });
 
+  
+
   function openArticle(el) {
     const title = encodeURIComponent(el.dataset.title);
     const category = encodeURIComponent(el.dataset.category);
@@ -231,22 +214,35 @@
     window.open(url, '_blank');
   }
 
-  // hamburger
-  const hamburgerBtn = document.getElementById('hamburgerBtn');
-  const navMenu = document.getElementById('navMenu');
-  hamburgerBtn.addEventListener('click', function (e) {
-    navMenu.classList.toggle('open');
-    e.stopPropagation();
-  });
-  document.addEventListener('click', function (e) {
-    if (window.innerWidth <= 900) {
-      if (!navMenu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
-        navMenu.classList.remove('open');
+  
+
+    // Funktion för att inkludera HTML-komponenter
+    function includeHTML() {
+      var z, i, elmnt, file, xhttp;
+      z = document.getElementsByTagName("*");
+      for (i = 0; i < z.length; i++) {
+        elmnt = z[i];
+        file = elmnt.getAttribute("include-html");
+        if (file) {
+          xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4) {
+              if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+              if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+              elmnt.removeAttribute("include-html");
+              includeHTML();
+            }
+          }
+          xhttp.open("GET", file, true);
+          xhttp.send();
+          return;
+        }
       }
     }
-  });
-
-  document.addEventListener('DOMContentLoaded', initNews);
+    document.addEventListener('DOMContentLoaded', function() {
+      includeHTML();
+      initNews();
+    });
 </script>
 </body>
 </html>

@@ -3,35 +3,27 @@
 <html lang="sv">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="icon" href="/assets/Images/favoicon.png" type="image/png" sizes="32x32">
-    <link rel="shortcut icon" href="/assets/Images/favoicon.png" type="Image/png">
+    <link rel="icon" type="image/png" href="../assets/images/favoicon.png" class="favicon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Futurearc.se – Din framtid börjar här</title>
-    <meta name="description" content="Futurearc är en plattform för att lära sig kodning, AI och tech – tillsammans bygger vi framtidens community.">
+    <title>FutureArc main</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="assets/js/include.js"></script>
-    <script src="assets/js/navbar.js"></script>
+    <script src="assets/js/mobilemenu.js"></script>
     <script src="assets/js/modal.js"></script>
     <script src="assets/js/faq.js"></script>
     <script src="assets/js/script.js"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-892EWF076W"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-892EWF076W');
-    </script>
 </head>
-<body onload="includeHTML()">
+<body class="homepage" onload="includeHTML()">
     <div include-html="components/header.html"></div>
-    <div class="section-divider-hero"></div>
     <div include-html="components/hero.html"></div>
     <div class="section-divider"></div>
     <div include-html="components/futures.html"></div>
     <div class="section-divider"></div>
+    <div include-html="components/ourprocesses.html"></div>
+    <div class="section-divider"></div>
+    <div include-html="components/techstackmarque.html"></div>
+    <div class="section-divider-hero"></div>
     <div include-html="components/faq.html"></div>
     <div class="section-divider"></div>
     <button onclick="scrollToTop()" class="scroll-to-top">
@@ -62,5 +54,8 @@ function scrollToTop() {
     </script>
     <!-- Js för att cta knappen ska scrolla till futures sectionen direkt -->
     <script src="assets/js/script.js"></script>
+
+
+    
 </body>
 </html>

@@ -1,27 +1,102 @@
-<footer>
+<footer style="background-color: #121212; padding: 3rem 2rem; color: #ccc;">
+    <style>
+    .footer-content {
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: nowrap;
+      gap: 4rem;
+      max-width: 1200px;
+      margin: auto;
+      align-items: center; /* detta gör att alla barn är vertikalt centrerade */
+    }
+
+    .footer-column {
+      flex: 1 1 200px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* centrerar innehållet vertikalt */
+      height: 100%; /* säkerställer att höjden kan anpassas */
+    }
+    .footer-column h3,
+    .footer-column h4 {
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+    .footer-column p {
+      color: #ccc;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .footer-column a {
+      display: inline;
+      color: #ccc;
+      text-decoration: none;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+      cursor: pointer;
+      padding: 0;
+    }
+    .footer-column a:hover {
+      color: #f86700;
+    }
+    .footer-bottom {
+    text-align: center;
+    padding: 1.5rem 1rem; /* Mer padding ovan och under */
+    margin-top: 1.5rem;  /* Luft ovanför linjen */
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.85rem;
+    color: #aaa;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    }
+    @media (max-width: 600px) {
+      .footer-content {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 2rem;
+        align-items: flex-start; /* ändra för mobil */
+      }
+      .footer-column {
+        flex: 1 1 100%;
+        height: auto;
+      }
+    }
+    .footer-column:last-child {
+      margin-top: -1.5rem;
+    }
+    .footer-description {
+    color: #f86700 !important;
+    }
+    </style>
     <div class="footer-content">
-        <div class="footer-links">
-            <a href="assets/docs/Futurearcwhitepaper.pdf" target="_blank" rel="noopener noreferrer">Whitepaper</a>
-            <a href="cookies.html" target="_blank" rel="noopener noreferrer">Cookies</a>
-            <a href="about.html" target="_blank" rel="noopener noreferrer">Om oss</a>
-            <a href="contactus.html" target="_blank" rel="noopener noreferrer">Kontakta oss</a>
-            <a href="copyright.html" target="_blank" rel="noopener noreferrer">Copyright</a>
-            <a href="privacypolicy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-        </div>
-        <div class="social-icons">
-            <a href="https://www.linkedin.com/company/futurearcmedia" class="social-link" aria-label="LinkedIn" target="_blank">
-                <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="https://x.com/future_arcmedia" class="social-link" aria-label="Twitter" target="_blank">
-                <i class="fab fa-x-twitter"></i>
-            </a>
-            <a href="https://www.instagram.com/futurearcmedia" class="social-link" aria-label="Instagram" target="_blank">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://www.tiktok.com/@futurearcmedia" class="social-link" aria-label="TikTok" target="_blank">
-                <i class="fab fa-tiktok"></i>
-            </a>
-        </div>
-        <p style="margin-top: 1rem;">&copy; 2025 Future Arc. Alla rättigheter förbehållna.</p>
+      <div class="footer-column">
+        <img src="assets/images/logowhite.png" alt="Future Arc logo" style="max-width: 180px; height: auto;">
+        <p class="footer-description">Vi skapar möjligheter för framtidens tech-community. Var med och forma framtiden.</p>
+      </div>
+      <div class="footer-column">
+        <h4>Utforska</h4>
+        <a href="index.html">Hem</a>
+        <a href="about.html">Om oss</a>
+        <a href="services.html">Tjänster</a>
+        <a href="contactus.html">Kontakta oss</a>
+      </div>
+      <div class="footer-column">
+        <h4>Följ oss</h4>
+        <a href="https://www.instagram.com/futurearcmedia" target="_blank">Instagram</a>
+        <a href="https://x.com/future_arcmedia" target="_blank">Twitter</a>
+        <a href="https://www.linkedin.com/company/futurearcmedia" target="_blank">LinkedIn</a>
+        <a href="https://www.tiktok.com/@futurearcmedia" target="_blank">TikTok</a>
+      </div>
+      <div class="footer-column">
+        <h4>Juridiskt</h4>
+        <a href="privacypolicy.html">Privacy Policy</a>
+        <a href="cookies.html">Cookies</a>
+        <a href="copyright.html">Copyright</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Future Arc. Alla rättigheter förbehållna.</p>
     </div>
 </footer>

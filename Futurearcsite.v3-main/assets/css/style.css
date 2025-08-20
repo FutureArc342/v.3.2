@@ -4,11 +4,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-
 @import url('https://fonts.googleapis.com/css2?family=Iceland&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 
+.process-component {
+  all: initial; /* Reset för att undvika CSS-konflikter */
+  display: block;
+  position: relative;
+  isolation: isolate; /* Skapar en ny lagerkontext */
+}
 
+/* Återinför dina viktigaste variabler */
+.process-component {
+  --background-color: #121212;
+  --surface-color: #1E1E1E;
+  --primary-accent-color: #FF6B00;
+  /* ... resten av dina variabler ... */
+}
 
 
 * {
@@ -32,188 +44,144 @@ body {
     padding: 0 15px; /* Sidpadding */
 }
 
-/* Header Styles */
-header {
-    background: linear-gradient(90deg, #11100f, #000000); /* Mörk gradient */
-    color: #fff; /* Vit text */
-    padding: 20px 0; /* Vertikal padding för utrymme */
+
+
+
+
+/* ===== SLUTGILTIG HEADER-STIL (V.5 - Korrigerad & Balanserad) ===== */
+
+/* GRUNDSTIL (Gäller alla sidor) */
+.floating-header {
+    position: relative;
+    z-index: 100;
+    padding: 15px 0;
+    background-color: #1a1a1a;
+    border-bottom: 1px solid #333;
 }
 
-header .container {
+/* SPECIALSTIL FÖR ENDAST HEMSIDAN */
+.homepage .floating-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: transparent;
+    border-bottom: none;
+    padding: 25px 0;
+}
+
+/* --- Gemensamma stilar för layout och element --- */
+.floating-header .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 15px;
-    position: relative;
+    perspective: 1000px;
 }
 
-.logo {
-    width: 250px; /* Öka bredden på loggan */
-    height: auto; /* Bibehåll proportionerna */
-    margin-right: 20px; /* Mellanrum till nästa element */
-    margin-bottom: -7px;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    
+.floating-header .logo-link {
+    width: 230px;
+    flex-shrink: 0; /* Förhindrar att den krymper */
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+                filter 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.floating-header .logo { width: 100%; height: auto; }
+.floating-header .logo-link:hover {
+    transform: scale(1.1) rotateX(5deg) rotateY(-5deg);
+    filter: drop-shadow(0 5px 15px rgba(248, 103, 0, 0.4));
 }
 
-.logo:hover {
-    transform: scale(1.1);/* Förstorar loggan vid hover */
-    filter: brightness(0.5);
+/* **KORRIGERING:** Säkerställer att platshållaren har samma bredd som loggan */
+.header-placeholder {
+    width: 230px; /* <-- VIKTIGASTE ÄNDRINGEN */
+    flex-shrink: 0; /* Förhindrar att den krymper */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
-/* Mobil meny */
-@media (max-width: 768px) {
-    .logo {
-        width: 200px; /* Minska bredden på loggan i telefonvy */
-    }
+/* Stil för navigerings-pillen */
+.floating-header .header-nav {
+    background-color: rgba(35, 35, 35, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    padding: 8px;
+    transition: all 0.4s ease;
 }
 
-
-nav ul {
-    list-style: none; /* Tar bort punktlistan */
-    padding: 0; /* Tar bort padding */
-    margin: 5px 0 0; /* Justerar margin för listan */
+.homepage .floating-header .header-nav:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
 }
 
-nav ul li {
-    display: inline; /* Gör listan horisontell */
-    margin: 0 10px; /* Mellanrum mellan listobjekten */
+.floating-header .header-nav ul {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: flex;
+    gap: 0.5rem;
+}
+.floating-header .header-nav ul li a {
+    font-family: 'Roboto', 'Open Sans', sans-serif;
+    color: #e0e0e0;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 10px 22px;
+    border-radius: 40px;
+    transition: all 0.25s ease;
+    display: block;
+}
+.floating-header .header-nav ul li a:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+.floating-header .header-nav ul li a.active {
+    background-color: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
 }
 
-nav ul li a {
-    font-family: "Iceland", serif;
-    color: #fff; /* Vit färg på länktext */
-    text-decoration: none; /* Tar bort understrykning från länkar */
-    font-weight: bolder; /* Fetter texten */
-    font-size: 1.8rem;
-    position: relative; /* Behållare för pseudo-element */
-    display: inline-block; /* Gör att länken beter sig som en block för att underlätta animation */
-    transition: opacity 0.3s ease; /* Animerar opaciteten */
-}
-
-nav ul li a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -1px; /* Placera linjen under texten */
-    width: 100%; /* Linjen sträcker sig över hela länken */
-    height: 2px; /* Höjd på linjen */
-    background-color: #f25c05; /* Färg på linjen */
-    transform: scaleX(0); /* Börjar med att linjen är osynlig */
-    transform-origin: left; /* Startar animationen från vänster */
-    transition: transform 0.3s ease; /* Animerar linjen */
-}
-
-nav ul li a:hover::after {
-    transform: scaleX(1); /* Linjen visas full bredd */
-    transform-origin: left; /* Gör att linjen "slider ut" till höger */
-}
-
-nav ul li a:hover {
-    color: #f86700;
-}
-
-/* När du hovrar över en länk, sänk opaciteten på de andra länkarna */
-nav ul:hover li a {
-    opacity: 0.3; /* Sänker opaciteten på alla länkar */
-}
-
-nav ul li a:hover {
-    opacity: 1; /* Behåll full opacitet på den länk du hovrar över */
-}
-
-
-/* Specifik stil för nyhetsknappen */
-@keyframes vibrate {
-    0%, 100% { 
-        transform: translate(0) rotate(0); 
-        text-shadow: 0 0 10px rgba(242, 92, 5, 0.8);
-    }
-    10% { 
-        transform: translate(-8px, 8px) rotate(-3deg); 
-        text-shadow: 0 0 20px rgba(242, 92, 5, 0.9);
-    }
-    20% { 
-        transform: translate(8px, -8px) rotate(3deg);
-        text-shadow: 0 0 15px rgba(242, 92, 5, 1);
-    }
-    30% { 
-        transform: translate(-8px, -8px) rotate(-3deg);
-        text-shadow: 0 0 20px rgba(242, 92, 5, 0.9);
-    }
-    40% { 
-        transform: translate(8px, 8px) rotate(3deg);
-        text-shadow: 0 0 25px rgba(242, 92, 5, 1);
-    }
-    50% { 
-        transform: translate(-8px, 0) rotate(-3deg);
-        text-shadow: 0 0 30px rgba(242, 92, 5, 0.8);
-    }
-    60% { 
-        transform: translate(8px, 0) rotate(3deg);
-        text-shadow: 0 0 25px rgba(242, 92, 5, 1);
-    }
-    70% { 
-        transform: translate(-8px, 8px) rotate(-3deg);
-        text-shadow: 0 0 20px rgba(242, 92, 5, 0.9);
-    }
-    80% { 
-        transform: translate(8px, -8px) rotate(3deg);
-        text-shadow: 0 0 15px rgba(242, 92, 5, 1);
-    }
-    90% { 
-        transform: translate(-4px, 4px) rotate(-1deg);
-        text-shadow: 0 0 10px rgba(242, 92, 5, 0.8);
-    }
-}
-
-nav ul li a[href="#"] {
-    position: relative;
-    display: inline-block;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-nav ul li a[href="#"]:active {
-    animation: vibrate 0.5s ease-in-out;
-    color: #ff3e00;
-    text-shadow: 0 0 15px #ff3e00;
-    transform-origin: center;
-}
-
-
-/* Beta Tag som ska bort vid lanseringen av riktiga sida */
+/* Stil för Beta-etiketten */
 .beta-tag {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: rgba(248, 103, 0, 0.9);
-    color: white;
-    padding: 8px 15px;
-    border-radius: 15px;
-    font-size: 0.9rem;
-    font-weight: bold;
+    display: none; /* Dold som standard, visas bara på startsidan */
+    padding: 12px 28px;
+    background-color: rgba(248, 103, 0, 0.15);
+    color: #f86700;
+    border: 1px solid rgba(248, 103, 0, 0.3);
+    border-radius: 50px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
     text-transform: uppercase;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(5px);
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+.homepage .beta-tag {
+    display: inline-block; /* Visa BARA på startsidan */
 }
 
-/* Make it responsive */
+
+/* ----- Responsivitet ----- */
+@media (max-width: 992px) {
+    .beta-tag { display: none !important; }
+}
 @media (max-width: 768px) {
-    .beta-tag {
-        top: 10px;
-        right: 10px;
-        font-size: 0.8rem;
-        padding: 6px 12px;
+    .floating-header .header-nav,
+    .floating-header .header-placeholder {
+        display: none;
     }
 }
 
 
 
-/* Hero Section */
+
+/* Hero Section Styles */
+
 
 .hero {                 /* bakgrunden kan ändras med bara banner.png , vi får bestämma */
-    background: url(../Images/banner.png) no-repeat center center/cover; /* Mörk bakgrund för kontrast */
+    background: url(../images/banner.png) no-repeat center center/cover; /* Mörk bakgrund för kontrast */
     color: #ffffff; /* Vit text för läsbarhet */
     text-align: center; /* Centrerar all text */
     padding: 50px 20px; /* Justerar padding för bättre layout */
@@ -546,71 +514,6 @@ nav ul li a[href="#"]:active {
 
 
 
-/* Senaste nyheter / News Section */
-.news {
-    padding: 40px 20px; /* Padding för utrymme */
-    background: linear-gradient(90deg, #171615, #000000); /* Mörk bakgrund */
-    text-align: center; /* Centrerad text */
-}
-
-.news h2 {
-    color: #f86700;
-    font-size: 2.5rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-top: 1rem;  
-    margin-bottom: 4rem;
-}
-
-.articles {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-top: -2rem;  /* Negativt margin för att flytta artiklarna uppåt */
-}
-
-.articles article {
-    background-color: #1a1a1a;
-    border: 1px solid #f86700;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(248, 103, 0, 0.3);
-    width: 300px;
-    text-align: left;
-    transition: all 0.3s ease;
-}
-
-
-.articles article:hover {
-    border-color: #f86700; /* Orange border vid hover */
-    box-shadow: 0 0 35px rgba(248, 103, 0, 0.5); /* Glödande orange effekt */
-    transform: scale(1.05); /* Ta bort scale effekten */
-}
-
-.articles article h3 {
-    margin: 0 0 10px; /* Avstånd ovanför rubriken */
-    font-size: 1.5rem; /* Större rubriktext */
-    color: #fff;
-}
-
-.articles article p {
-    color: #fff;
-    font-size: 1rem; /* Normal textstorlek */
-    margin-bottom: 10px; /* Mellanrum under texten */
-}
-
-.read-more {
-    color: #fff; /* Orange textfärg för "läs mer" */
-    text-decoration: none; /* Ingen understrykning */
-    font-weight: bold; /* Fet stil */
-}
-
-.read-more:hover {
-    color: #ff8741; /* Understrykning vid hover */
-    transform: scale(1.05);
-}
-
 
 
 /* Social Icons */
@@ -859,108 +762,7 @@ nav ul li a[href="#"]:active {
 }
 
 
-/*Footer*/
-.footer .social-icons {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin: 2rem 0;
-}
 
-.footer .social-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px; /* Justera bredden */
-    height: 60px; /* Justera höjden */
-    background-color: #1a1b1e;
-    border-radius: 12px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    text-decoration: none;
-    transform: translateY(0);
-}
-
-.footer .social-link i {
-    color: #f86700;
-    font-size: 34px; /* Justera ikonens storlek */
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.footer .social-link:hover {
-    transform: translateY(-8px);
-    background-color: #f86700;
-    box-shadow: 0 5px 15px rgba(248, 103, 0, 0.4);
-}
-
-.footer .social-link:hover i {
-    color: white;
-    transform: scale(1.1);
-}
-
-.footer-content {
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-}
-
-.footer-links {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.footer-links a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: color 0.3s ease;
-    position: relative;
-}
-
-.footer-links a:hover {
-    color: #f86700;
-}
-
-.footer-links a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -4px;
-    left: 0;
-    background-color: #f86700;
-    transition: width 0.3s ease;
-}
-
-.footer-links a:hover::after {
-    width: 100%;
-}
-
-footer {
-    background: linear-gradient(90deg, #171615, #000000); /* Mörk bakgrund */
-    color: #fff; /* Vit text */
-    text-align: center; /* Centrerad text */
-    padding: 5px 0; /* Padding för utrymme */
-    margin-top: 0; /* Utrymme ovanför footer */
-}
-
-footer p {
-    margin: 5px 0; /* Små marginaler för text */
-}
-
-footer a {
-    color: #f25c05; /* Orange länkar */
-    text-decoration: none; /* Ingen understrykning */
-}
-
-.social-icons {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
 
 
 

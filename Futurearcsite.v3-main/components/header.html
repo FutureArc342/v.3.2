@@ -1,25 +1,21 @@
-<!DOCTYPE html>
-<html lang="sv">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="path/to/style.css">
-    <title>header</title>
-</head>
-<body>
-    <div class="bottom-header">
-    <div class="medelande">
-        <h6>Vi jobbar fortfarande med att få alla funktioner på hemsidan. Håll utkik för uppdateringar!</h6>
-    </div>
-    </div>
-    <header>
-        <div class="container">
-            <a href="index.html">
-                <img src="assets/Images/logowhite.png" alt="FutureArc Logo" class="logo" id="logo">
-            </a>
-            <nav include-html="components/navbar.html"></nav>
-        </div>
-    </header>
-</body>
-</html>
+<header class="floating-header">
+    <div class="container">
+        <a href="index.html" class="logo-link">
+            <img src="assets/Images/logowhite.png" alt="FutureArc Logo" class="logo">
+        </a>
 
+        <nav class="header-nav">
+            <ul>
+                <li><a href="news.html">Nyheter</a></li> 
+                <li><a href="tjanster.html">Tjänster</a></li>
+                <li><a href="about.html">Om Oss</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contactus.html">Kontakt</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-placeholder">
+            <span class="beta-tag">BETA V2</span>
+        </div>
+    </div>
+</header>

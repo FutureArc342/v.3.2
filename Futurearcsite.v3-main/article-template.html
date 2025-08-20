@@ -5,15 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title id="pageTitle">Artikel</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Iceland&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #f8f9fa;
+      background-color: #11100f;
       margin: 0;
       line-height: 1.7;
-      color: #343a40;
+      color: #fff;
     }
     .header-bg {
       background: linear-gradient(90deg, #171615 0%, #f86700 100%);
@@ -63,11 +64,11 @@
     .article-container {
       max-width: 100%;
       margin: 0 auto;
-      background-color: #ffffff;
+      background-color: #18191c;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      border-radius: 8px;
+      border-radius: 0; /* ändrad från 8px till 0 för att ta bort rundade hörn */
       overflow: hidden;
-      margin-bottom: 32px;
+      margin-bottom: 0; /* ändrad från 32px till 0 för att ta bort gap mot footer */
     }
     .article-image-full {
       width: 100%;
@@ -81,13 +82,14 @@
       margin: 0 auto;
       padding: 48px 32px;
       box-sizing: border-box;
+      background: transparent;
     }
     .article-title {
       font-family: 'Inter', sans-serif;
       font-size: 4rem;
       line-height: 1.1;
       font-weight: 800;
-      color: #212529;
+      color: #fff;
       margin-bottom: 24px;
       letter-spacing: -0.02em;
     }
@@ -96,7 +98,7 @@
       flex-wrap: wrap;
       align-items: center;
       font-size: 0.95rem;
-      color: #6c757d;
+      color: #bdbdbd;
       margin-bottom: 32px;
     }
     .article-meta .news-category-custom {
@@ -105,7 +107,7 @@
     .article-body-text {
       font-size: 1.15rem;
       line-height: 1.85;
-      color: #495057;
+      color: #e0e0e0;
       margin-bottom: 24px;
     }
     .back-button-container {
@@ -117,7 +119,7 @@
     }
     .back-button {
       background-color: #f86700;
-      color: white;
+      color: #fff;
       font-weight: 600;
       padding: 18px 30px;
       border-radius: 9999px;
@@ -206,28 +208,12 @@
   </style>
 </head>
 <body class="bg-gray-100">
-
-  <header class="header-bg">
-    <div class="header-gradient-overlay"></div>
-    <div class="container mx-auto flex items-center justify-between py-8 px-4 sm:px-6 relative z-10">
-      <div class="flex items-center gap-4 sm:gap-6">
-        <a href="index.html"><img src="assets/images/logowhite.png" alt="FutureArc Logo" class="h-10 w-auto block" /></a>
-        <span class="bg-[#f86700] text-white text-base font-semibold px-3 py-1 rounded-md tracking-wider shadow-sm flex items-center h-10">ARTIKEL</span>
-      </div>
-      <nav class="relative">
-        <div class="hamburger" id="hamburgerBtn"><span></span><span></span><span></span></div>
-        <ul id="navMenu" class="list-none flex gap-6 sm:gap-8 m-0 p-0">
-          <li><a href="index.html" class="nav-link">Hem <span class="underline-animate"></span></a></li>
-          <li><a href="news.html" class="nav-link">Nyheter <span class="underline-animate"></span></a></li>
-          <li><a href="about.html" class="nav-link">Om oss <span class="underline-animate"></span></a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
+  <div include-html="components/header.html"></div> 
+  <div class="section-divider"></div>  
   <main class="py-0">
     <div class="article-container">
       <img id="articleImage" src="" alt="Artikelbild" class="article-image-full" />
+      <div class="section-divider"></div>
       <div class="article-content-wrapper">
         <h1 id="articleTitle" class="article-title"></h1>
         <div class="article-meta">
@@ -243,14 +229,42 @@
       </div>
     </div>
   </main>
-
-  <footer class="bg-gray-800 text-white text-center p-6 mt-8">
-    <p>&copy; <span id="currentYear"></span> Din Nyhetssida. Alla rättigheter förbehållna.</p>
+<div class="section-divider"></div>
+  <footer>
+    <div include-html="components/footer.html"></div>
   </footer>
+  
 
   <script>
+       // Funktion för att inkludera HTML-komponenter
+    function includeHTML() {
+      var z, i, elmnt, file, xhttp;
+      z = document.getElementsByTagName("*");
+      for (i = 0; i < z.length; i++) {
+        elmnt = z[i];
+        file = elmnt.getAttribute("include-html");
+        if (file) {
+          xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4) {
+              if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+              if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+              elmnt.removeAttribute("include-html");
+              includeHTML();
+            }
+          }
+          xhttp.open("GET", file, true);
+          xhttp.send();
+          return;
+        }
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
-      document.getElementById('currentYear').textContent = new Date().getFullYear();
+      includeHTML();
+
+      var yearEl = document.getElementById('currentYear');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
 
       const urlParams = new URLSearchParams(window.location.search);
       const title = urlParams.get('title');
@@ -259,30 +273,45 @@
       const image = urlParams.get('image');
       const excerpt = urlParams.get('excerpt');
 
-      document.getElementById('pageTitle').textContent = decodeURIComponent(title);
-      document.getElementById('articleTitle').textContent = decodeURIComponent(title);
-      document.getElementById('articleCategory').textContent = decodeURIComponent(category);
-      document.getElementById('articleTimestamp').textContent = decodeURIComponent(timestamp);
-      document.getElementById('articleImage').src = decodeURIComponent(image);
-      document.getElementById('articleImage').alt = decodeURIComponent(title);
-      document.getElementById('articleExcerpt').textContent = decodeURIComponent(excerpt);
+      function safeDecode(param) {
+        try {
+          return decodeURIComponent(param);
+        } catch (e) {
+          return param;
+        }
+      }
+
+      document.getElementById('pageTitle').textContent = safeDecode(title);
+      document.getElementById('articleTitle').textContent = safeDecode(title);
+      document.getElementById('articleCategory').textContent = safeDecode(category);
+      document.getElementById('articleTimestamp').textContent = safeDecode(timestamp);
+      document.getElementById('articleImage').src = safeDecode(image);
+      document.getElementById('articleImage').alt = safeDecode(title);
+      document.getElementById('articleExcerpt').textContent = safeDecode(excerpt);
 
       // Hämta fullständig text från nyheter.json
-        fetch('nyheter.json')
-        .then(res => res.json())
-        .then(data => {
-            const article = data.find(item => item.title === decodeURIComponent(title));
-            if (article && article.body) {
-            const container = document.getElementById('articleBody');
-            // Om body innehåller radbrytningar, dela upp i stycken
-            article.body.split('\n').forEach(para => {
-                const p = document.createElement('p');
-                p.textContent = para.trim();
-                p.className = 'article-body-text';
-                container.appendChild(p);
-            });
+    fetch('nyheter.json')
+      .then(res => res.json())
+      .then(data => {
+        const urlTitle = decodeURIComponent(title).trim().toLowerCase();
+        const article = data.find(item => item.title.trim().toLowerCase() === urlTitle);
+        if (article && article.body) {
+          const container = document.getElementById('articleBody');
+          container.innerHTML = ""; // Rensa om det redan finns innehåll
+          article.body.split('\n').forEach(para => {
+            if (para.trim()) {
+              const p = document.createElement('p');
+              p.textContent = para.trim();
+              p.className = 'article-body-text';
+              container.appendChild(p);
             }
-        });
+          });
+        }
+        // Visa rätt timestamp
+        if (article && article.timestamp) {
+          document.getElementById('articleTimestamp').textContent = timeAgo(article.timestamp);
+        }
+      });
 
       const hamburgerBtn = document.getElementById('hamburgerBtn');
       const navMenu = document.getElementById('navMenu');
@@ -298,6 +327,23 @@
         });
       }
     });
+    // Omvandla ISO-tid till "x timmar sedan"
+    function timeAgo(dateString) {
+      const now = new Date();
+      const date = new Date(dateString);
+      const diffMs = now - date;
+      const diffH = Math.floor(diffMs / (1000 * 60 * 60));
+      if (diffH < 24) return `${diffH} timmar sedan`;
+      const diffD = Math.floor(diffH / 24);
+      if (diffD < 7) return `${diffD} dagar sedan`;
+      // Om mer än en vecka, visa datum i formatet ÅÅÅÅ-MM-DD
+      return date.toLocaleDateString('sv-SE', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    }
+
+    // Använd så här:
+    const timestamp = article.timestamp;
+    document.getElementById('articleTimestamp').textContent = timeAgo(timestamp);
+
   </script>
 </body>
 </html>
