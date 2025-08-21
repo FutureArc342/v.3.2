@@ -7,6 +7,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Iceland&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 
+html {
+    scroll-behavior: smooth;
+}
+
 .process-component {
   all: initial; /* Reset för att undvika CSS-konflikter */
   display: block;
@@ -99,11 +103,15 @@ body {
     align-items: center;
 }
 
-/* Stil för navigerings-pillen */
+/* Stil för navigerings-pillen (Med mer blur) */
 .floating-header .header-nav {
-    background-color: rgba(35, 35, 35, 0.4);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    /* Justerad bakgrundsfärg för starkare glas-effekt */
+    background-color: rgba(35, 35, 35, 0.25); 
+    
+    /* Ökat blur-värde för mer oskärpa */
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
     border-radius: 50px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
@@ -181,7 +189,7 @@ body {
 
 
 .hero {                 /* bakgrunden kan ändras med bara banner.png , vi får bestämma */
-    background: url(../Images/banner.png) no-repeat center center/cover; /* Mörk bakgrund för kontrast */
+    background: url(../images/banner.png) no-repeat center center/cover; /* Mörk bakgrund för kontrast */
     color: #ffffff; /* Vit text för läsbarhet */
     text-align: center; /* Centrerar all text */
     padding: 50px 20px; /* Justerar padding för bättre layout */

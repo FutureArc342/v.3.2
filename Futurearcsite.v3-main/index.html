@@ -3,7 +3,7 @@
 <html lang="sv">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="icon" type="image/png" href="../assets/Images/favoicon.png" class="favicon">
+    <link rel="icon" type="image/png" href="../assets/images/favoicon.png" class="favicon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FutureArc main</title>
@@ -32,30 +32,27 @@
     </button>
     <div include-html="components/footer.html"></div>
     <script>
-// JavaScript för att hantera visning och dölja knappen
-window.onscroll = function() {
-    var scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
-    var windowHeight = window.innerHeight;
-    var fullHeight = document.body.scrollHeight;
-    
-    var button = document.querySelector('.scroll-to-top');
-    
-    // Visa knappen endast när användaren är nära botten av sidan
-    if (fullHeight - (scrollPosition + windowHeight) <= 1000) {
-        button.style.bottom = '20px'; // Flyttar upp knappen så den är synlig
-    } else {
-        button.style.bottom = '-60px'; // Gömmer knappen
-    }
-};
+        // JavaScript för att hantera visning och dölja knappen
+        window.onscroll = function() {
+            var scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+            var windowHeight = window.innerHeight;
+            var fullHeight = document.body.scrollHeight;
+            
+            var button = document.querySelector('.scroll-to-top');
+            
+            // Visa knappen endast när användaren är nära botten av sidan
+            if (fullHeight - (scrollPosition + windowHeight) <= 1000) {
+                button.style.bottom = '20px';
+            } else {
+                button.style.bottom = '-60px';
+            }
+        };
 
-function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     </script>
-    <!-- Js för att cta knappen ska scrolla till futures sectionen direkt -->
     <script src="assets/js/script.js"></script>
 
-
-    
-</body>
+    </body>
 </html>

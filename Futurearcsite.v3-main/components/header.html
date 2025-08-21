@@ -1,21 +1,145 @@
-<header class="floating-header">
-    <div class="container">
-        <a href="index.html" class="logo-link">
-            <img src="assets/Images/logowhite.png" alt="FutureArc Logo" class="logo">
-        </a>
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Din Titel</title>
+    <link rel="stylesheet" href="style.css">
 
-        <nav class="header-nav">
-            <ul>
-                <li><a href="#">Nyheter</a></li> 
-                <li><a href="#">Tjänster</a></li>
-                <li><a href="about.html">Om Oss</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="contactus.html">Kontakt</a></li>
-            </ul>
-        </nav>
+    <style>
+        /* ===== NY TECH POPUP-STIL ===== */
 
-        <div class="header-placeholder">
-            <span class="beta-tag">BETA V2</span>
+        /* Behållare för popupen */
+        #news-popup {
+            /* Dold som standard */
+            opacity: 0;
+            pointer-events: none;
+            
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2000;
+            
+            /* Centrerar och placerar den högt upp */
+            display: flex;
+            justify-content: center; /* Centrerar horisontellt */
+            align-items: center;     /* Centrerar vertikalt */
+            padding-top: 0;          /* Ta bort gammal padding */
+            
+            background-color: rgba(18, 18, 18, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        /* Visas när den får klassen 'active' */
+        #news-popup.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Själva popup-rutan */
+        .tech-popup {
+            background-color: #1a1b1e; /* Matchar box-bakgrund från din sida */
+            color: #eaeaea;
+            padding: 25px 35px;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            border: 1px solid #FF6B00;
+            box-shadow: 0 0 25px rgba(255, 107, 0, 0.3), 0 0 10px rgba(255, 107, 0, 0.2) inset;
+            width: auto;
+            max-width: 450px;
+            overflow: hidden; /* Viktigt för timer-baren */
+
+            /* In-animation */
+            transform: translateY(-30px);
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* Kör in-animationen när popupen är aktiv */
+        #news-popup.active .tech-popup {
+            transform: translateY(0);
+        }
+
+        .tech-popup h2 {
+            font-family: 'Roboto', 'Open Sans', sans-serif; /* Matchar headerns font */
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 0;
+            color: #fff;
+            text-shadow: 0 0 8px rgba(255, 107, 0, 0.5);
+        }
+
+        /* Ikon-styling */
+        .tech-popup h2 i {
+            color: #FF6B00;
+            margin-right: 12px;
+            animation: pulse-icon 2s ease-in-out infinite;
+        }
+
+        /* Timer-bar längst ner i popupen */
+        .popup-timer-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            width: 100%;
+            background-color: #FF6B00;
+            box-shadow: 0 0 10px #FF6B00;
+        }
+
+        /* Animationen för timer-baren */
+        #news-popup.active .popup-timer-bar {
+            animation: shrink-bar 1.5s linear forwards;
+        }
+
+        @keyframes shrink-bar {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+
+        @keyframes pulse-icon {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="floating-header">
+        <div class="container">
+            <a href="index.html" class="logo-link">
+                <img src="assets/Images/logowhite.png" alt="FutureArc Logo" class="logo">
+            </a>
+    
+            <nav class="header-nav">
+                <ul>
+                    <li><a href="#" id="news-popup-trigger">Nyheter</a></li> 
+                    <li><a href="#our-processes">Tjänster</a></li>
+                    <li><a href="about.html">Om Oss</a></li>
+                    <li><a href="#faq-sektion">FAQ</a></li>
+                    <li><a href="contactus.html">Kontakt</a></li>
+                </ul>
+            </nav>
+    
+            <div class="header-placeholder">
+                <span class="beta-tag">BETA V2</span>
+            </div>
+        </div>
+    </header>
+
+    <div id="news-popup">
+        <div class="tech-popup">
+            <h2><i class="fas fa-broadcast-tower"></i> Nyheter lanseras snart...</h2>
+            <div class="popup-timer-bar"></div>
         </div>
     </div>
-</header>
+
+
+</body>
+</html>
