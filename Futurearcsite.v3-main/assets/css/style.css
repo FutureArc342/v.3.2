@@ -314,7 +314,8 @@ body {
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Lägger till vit glow-effekt */
     font-weight: 500; /* Gör texten fetare */
     line-height: 1.2; /* Justerar radavståndet för bättre läsbarhet */
-    margin-top: 10px;
+    margin-top: 140px;
+    margin-bottom: 15px;
 }
 
 .hero h2 .highlight {
@@ -341,7 +342,7 @@ body {
 .hero p {
     font-size: 1.2rem; /* Justerar textstorleken för paragrafer */
     color: #cccccc; /* Ljusare grå färg för paragrafer för att skilja från rubriken */
-    margin-top: 10px; 
+    margin-top: 0;  /* 🔑 inget extra avstånd ovanför */
     margin-bottom: 30px; /* Ökar utrymmet under paragrafer */
 }
 
