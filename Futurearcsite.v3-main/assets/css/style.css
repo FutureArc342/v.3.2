@@ -314,7 +314,7 @@ body {
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Lägger till vit glow-effekt */
     font-weight: 500; /* Gör texten fetare */
     line-height: 1.2; /* Justerar radavståndet för bättre läsbarhet */
-    margin-top: 100px;
+    margin-top: 10px;
 }
 
 .hero h2 .highlight {
