@@ -341,7 +341,7 @@ body {
 .hero p {
     font-size: 1.2rem; /* Justerar textstorleken för paragrafer */
     color: #cccccc; /* Ljusare grå färg för paragrafer för att skilja från rubriken */
-    margin-top: 0;
+    margin-top: 10px; 
     margin-bottom: 30px; /* Ökar utrymmet under paragrafer */
 }
 
